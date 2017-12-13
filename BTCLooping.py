@@ -68,5 +68,5 @@ while(True):
                 print("Backwards BTC/ETH/ALT/BTC with", ((resultO-initial)/initial)*100, "%")
                 print("F:", result, "B:", resultO)
             else:
-                print(item, "F:", str(result), "B:", str(resultO))
+                # print(item, "F:", str(result), "B:", str(resultO))
                 continue
