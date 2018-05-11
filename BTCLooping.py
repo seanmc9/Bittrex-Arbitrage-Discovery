@@ -112,6 +112,10 @@ while(True):
                 print("Forwards BTC/ALT/ETH/BTC:", ((result-initial)/initial)*100, "%")
                 print("F:", result, "B:", resultO)
                 btc_to_alt = trade_request(BUY_LIMITORDER, ["BTC"+current_pair[3:], str(min_trade_quant*(BAlt_Ask)), str(BAlt_Ask)])
+                time.sleep(3) #This is how long it takes for the requests to go through anyways
+                #We only do this check on the first one because if the second doesn't go through we will just have to continue
+                #when I make an overarching program of this to manage funds and risk it will be updated
+                if(trade_request(GET_OPENORDERS, ["BTC"+current_pair[3:]])) : trade_request(CANCEL_ORDER, [btc_to_alt.get("result").get("uuid")])
                 alt_to_eth = trade_request(SELL_LIMITORDER, ["ETH"+current_pair[3:], str(min_trade_quant*(EAlt_Bid)), str(EAlt_Bid)])
                 eth_to_btc = trade_request(SELL_LIMITORDER, ["BTC-ETH", str(min_trade_quant*(1/BE_Bid)), str(BE_Bid)])
                 print("You have successfully completed an arbitrage trade changing", min_trade_quant, "BTC to", trade_request(GET_ORDER_HISTORY).get("result").pop(0).get("Quantity"), "BTC")
@@ -121,6 +125,8 @@ while(True):
                 print("Backwards BTC/ETH/ALT/BTC with", ((resultO-initial)/initial)*100, "%")
                 print("F:", result, "B:", resultO)
                 btc_to_eth = trade_request(BUY_LIMITORDER, ["BTC-ETH", str(min_trade_quant*BE_Ask), str(BE_Ask)])
+                time.sleep(3)
+                if(trade_request(GET_OPENORDERS, ["BTC-ETH"])) : trade_request(CANCEL_ORDER, [btc_to_eth.get("result").get("uuid")])
                 eth_to_alt = trade_request(SELL_LIMITORDER, ["ETH"+current_pair[3:], str(min_trade_quant*(EAlt_Ask)), str(EAlt_Ask)])                    
                 alt_to_btc = trade_request(SELL_LIMITORDER, ["BTC"+current_pair[3:], str(min_trade_quant*(BAlt_Bid)), str(BAlt_Bid)])
                 print("You have successfully completed an arbitrage trade changing", min_trade_quant, "BTC to", trade_request(GET_ORDER_HISTORY).get("result").pop(0).get("Quantity"), "BTC")
