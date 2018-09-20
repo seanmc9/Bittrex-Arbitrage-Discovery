@@ -113,8 +113,10 @@ while(True):
                 print("F:", result, "B:", resultO)
                 btc_to_alt = trade_request(BUY_LIMITORDER, ["BTC"+current_pair[3:], str(min_trade_quant*(BAlt_Ask)), str(BAlt_Ask)])
                 time.sleep(3) #This is how long it takes for the requests to go through anyways
+               
                 #We only do this check on the first one because if the second doesn't go through we will just have to continue
-                #when I make an overarching program of this to manage funds and risk it will be updated
+                #When I make an overarching program of this to manage funds and risk it will be updated
+                
                 if(trade_request(GET_OPENORDERS, ["BTC"+current_pair[3:]])) : trade_request(CANCEL_ORDER, [btc_to_alt.get("result").get("uuid")])
                 alt_to_eth = trade_request(SELL_LIMITORDER, ["ETH"+current_pair[3:], str(min_trade_quant*(EAlt_Bid)), str(EAlt_Bid)])
                 eth_to_btc = trade_request(SELL_LIMITORDER, ["BTC-ETH", str(min_trade_quant*(1/BE_Bid)), str(BE_Bid)])
